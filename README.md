@@ -75,8 +75,7 @@ Go to: http://localhost:3000
 Get 50 most recent conversations (latest message per contact).
 
 Query params:
-
-page (optional): Page number
+- page (optional): Page number
 
 ### 🔍 GET /conversations/search
 Search by message content, contact name, or phone number.
@@ -86,4 +85,25 @@ Query params:
 - page (optional)
 
 Example:
+```bash
+GET /conversations/search?searchValue=hello&page=2
+```
 
+### Performance Optimizations
+- GIN indexes + pg_trgm on searchable columns for fast fuzzy text search
+- Compound index on (contact_id, timestamp) for efficient retrieval of latest messages
+- DISTINCT ON instead of lateral joins to speed up recent conversation queries
+- Batch insertions during data generation to avoid memory overload
+
+### Assumptions Made
+Every contact has at least one message
+
+Message content is sourced from the provided CSV
+
+Phone numbers are unique and trimmed to 20 characters max
+
+Search is case-insensitive and matches partial strings using ILIKE
+
+Pagination is limited to 50 items per page for performance
+
+No auth or frontend — this is a backend-only demo
