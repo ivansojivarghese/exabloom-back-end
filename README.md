@@ -96,14 +96,12 @@ GET /conversations/search?searchValue=hello&page=2
 - Batch insertions during data generation to avoid memory overload
 
 ### Assumptions Made
-Every contact has at least one message
+- Every contact has at least one message
+- Message content is sourced from the provided CSV
+- Phone numbers are unique and trimmed to 20 characters max
+- Search is case-insensitive and matches partial strings using ILIKE
+- Pagination is limited to 50 items per page for performance
+- No auth or frontend — this is a backend-only demo
 
-Message content is sourced from the provided CSV
-
-Phone numbers are unique and trimmed to 20 characters max
-
-Search is case-insensitive and matches partial strings using ILIKE
-
-Pagination is limited to 50 items per page for performance
-
-No auth or frontend — this is a backend-only demo
+### Loom Video
+[Watch the walkthrough here](https://www.loom.com/share/711d9b39345b401f935342d963224f66)
